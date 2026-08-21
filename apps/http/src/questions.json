@@ -1,0 +1,122 @@
+[
+  {
+    "id": "q1",
+    "questionText": "Which organelle is known as the 'Powerhouse of the Cell'?",
+    "options": ["Ribosome", "Mitochondria", "Endoplasmic Reticulum", "Golgi apparatus"],
+    "correctAnswer": 1,
+    "subject": "Biology",
+    "topic": "Cell Biology",
+    "difficulty": "EASY",
+    "explanation": "Mitochondria produce ATP through cellular respiration, earning the title 'Powerhouse of the Cell'."
+  },
+  {
+    "id": "q2",
+    "questionText": "What is the normal diastolic blood pressure in a healthy adult human?",
+    "options": ["120 mm Hg", "80 mm Hg", "100 mm Hg", "60 mm Hg"],
+    "correctAnswer": 1,
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "difficulty": "EASY",
+    "explanation": "Standard blood pressure is 120/80 mm Hg, where 80 mm Hg is the diastolic pressure."
+  },
+  {
+    "id": "q3",
+    "questionText": "Which hormone is responsible for the 'Fight or Flight' response in humans?",
+    "options": ["Insulin", "Thyroxine", "Adrenaline (Epinephrine)", "Glucagon"],
+    "correctAnswer": 2,
+    "subject": "Biology",
+    "topic": "Endocrine System",
+    "difficulty": "MEDIUM",
+    "explanation": "Adrenaline is secreted by the adrenal medulla during stress or emergency conditions."
+  },
+  {
+    "id": "q4",
+    "questionText": "In DNA, adenine pairs with which nitrogenous base via two hydrogen bonds?",
+    "options": ["Guanine", "Cytosine", "Thymine", "Uracil"],
+    "correctAnswer": 2,
+    "subject": "Biology",
+    "topic": "Genetics",
+    "difficulty": "EASY",
+    "explanation": "According to Watson-Crick model, Adenine (A) pairs with Thymine (T) via 2 hydrogen bonds."
+  },
+  {
+    "id": "q5",
+    "questionText": "Which of the following blood groups is considered a Universal Donor?",
+    "options": ["AB Positive", "O Negative", "A Positive", "B Negative"],
+    "correctAnswer": 1,
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "difficulty": "MEDIUM",
+    "explanation": "O Negative RBCs lack A, B, and Rh antigens, making it safe for all recipients."
+  },
+  {
+    "id": "q6",
+    "questionText": "What is the SI unit of electric potential difference?",
+    "options": ["Ampere", "Ohm", "Volt", "Coulomb"],
+    "correctAnswer": 2,
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "difficulty": "EASY",
+    "explanation": "Volt (V) is the SI unit of electric potential difference and electromotive force."
+  },
+  {
+    "id": "q7",
+    "questionText": "A body is projected vertically upwards. At the highest point, its acceleration is:",
+    "options": ["Zero", "Equal to 'g' directed downwards", "Equal to 'g' directed upwards", "Infinite"],
+    "correctAnswer": 1,
+    "subject": "Physics",
+    "topic": "Kinematics",
+    "difficulty": "MEDIUM",
+    "explanation": "At the peak, velocity is 0 m/s but downward gravitational acceleration 'g' is continuously acting."
+  },
+  {
+    "id": "q8",
+    "questionText": "The phenomenon responsible for the twinkling of stars at night is:",
+    "options": ["Total Internal Reflection", "Atmospheric Refraction", "Dispersion of Light", "Diffraction"],
+    "correctAnswer": 1,
+    "subject": "Physics",
+    "topic": "Ray Optics",
+    "difficulty": "EASY",
+    "explanation": "Turbulent layers of earth's atmosphere cause varying refraction of starlight, producing twinkling."
+  },
+  {
+    "id": "q9",
+    "questionText": "What is the pH of pure water at 25°C?",
+    "options": ["0", "7", "14", "1"],
+    "correctAnswer": 1,
+    "subject": "Chemistry",
+    "topic": "Ionic Equilibrium",
+    "difficulty": "EASY",
+    "explanation": "At 25°C, [H+] = [OH-] = 10^-7 M, giving a neutral pH of 7."
+  },
+  {
+    "id": "q10",
+    "questionText": "Which gas is evolved when zinc granules react with dilute sulphuric acid?",
+    "options": ["Oxygen", "Hydrogen", "Sulphur dioxide", "Nitrogen"],
+    "correctAnswer": 1,
+    "subject": "Chemistry",
+    "topic": "Inorganic Chemistry",
+    "difficulty": "EASY",
+    "explanation": "Zn + H2SO4 -> ZnSO4 + H2 (Hydrogen gas is liberated)."
+  },
+  {
+    "id": "q11",
+    "questionText": "The shape of a methane (CH4) molecule according to VSEPR theory is:",
+    "options": ["Linear", "Trigonal Planar", "Tetrahedral", "Octahedral"],
+    "correctAnswer": 2,
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "difficulty": "EASY",
+    "explanation": "In CH4, carbon has 4 bond pairs and 0 lone pairs with sp3 hybridization, forming a tetrahedral shape."
+  },
+  {
+    "id": "q12",
+    "questionText": "Which of the following is an example of an amphoteric oxide?",
+    "options": ["Na2O", "SO2", "Al2O3", "CaO"],
+    "correctAnswer": 2,
+    "subject": "Chemistry",
+    "topic": "Periodic Properties",
+    "difficulty": "MEDIUM",
+    "explanation": "Al2O3 reacts with both acids and bases to produce salt and water, making it amphoteric."
+  }
+]

@@ -1,1 +1,1 @@
-{"version":"7.0.2","root":["./src/index.ts"],"packageJsons":["./package.json"]}
+{"root":["./src/game.ts","./src/gamemanager.ts","./src/user.ts","./src/auth.ts","./src/config.ts","./src/index.ts","./src/messages.ts","./src/types.ts"],"version":"5.9.2"}

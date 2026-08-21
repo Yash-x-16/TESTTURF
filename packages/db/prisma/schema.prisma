@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String            @id @default(cuid())
+  username      String            @unique
+  email         String            @unique
+  password      String
+  name          String
+  avatar        String?
+  points        Int               @default(0)
+  matchesPlayed Int               @default(0)
+  matchesWon    Int               @default(0)
+  matchesLost   Int               @default(0)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  matchesAsPlayer1 Match[]        @relation("Player1Matches")
+  matchesAsPlayer2 Match[]        @relation("Player2Matches")
+  matchesWonList   Match[]        @relation("WinnerMatches")
+  submissions      MatchSubmission[]
+
+  @@index([points(sort: Desc)])
+}
+
+model Question {
+  id            String            @id @default(cuid())
+  questionText  String
+  options       Json              // JSON array: ["option 1", "option 2", "option 3", "option 4"]
+  correctAnswer Int               // 0, 1, 2, or 3
+  subject       String            // "Physics", "Chemistry", "Biology"
+  topic         String?
+  difficulty    String            @default("MEDIUM") // "EASY", "MEDIUM", "HARD"
+  explanation   String?
+  createdAt     DateTime          @default(now())
+
+  submissions   MatchSubmission[]
+
+  @@index([subject])
+}
+
+model Match {
+  id           String            @id @default(cuid())
+  player1Id    String
+  player2Id    String
+  player1Score Int               @default(0)
+  player2Score Int               @default(0)
+  winnerId     String?
+  status       String            @default("COMPLETED") // "IN_PROGRESS", "COMPLETED", "ABANDONED"
+  startedAt    DateTime          @default(now())
+  endedAt      DateTime?
+
+  player1      User              @relation("Player1Matches", fields: [player1Id], references: [id])
+  player2      User              @relation("Player2Matches", fields: [player2Id], references: [id])
+  winner       User?             @relation("WinnerMatches", fields: [winnerId], references: [id])
+  submissions  MatchSubmission[]
+
+  @@index([player1Id])
+  @@index([player2Id])
+}
+
+model MatchSubmission {
+  id             String    @id @default(cuid())
+  matchId        String
+  userId         String
+  questionId     String
+  selectedOption Int       // -1 for timed-out/skipped, 0-3 for selected option
+  isCorrect      Boolean
+  pointsAwarded  Int       // +4 for correct, -1 for incorrect, 0 for timeout
+  createdAt      DateTime  @default(now())
+
+  match          Match     @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question       Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([matchId])
+  @@index([userId])
+}
