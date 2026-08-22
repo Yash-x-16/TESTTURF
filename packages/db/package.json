@@ -14,7 +14,7 @@
   "scripts": {
     "build": "pnpm db:generate && pnpm tsc -b",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push",
+    "db:push": "prisma db push --accept-data-loss",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio"
