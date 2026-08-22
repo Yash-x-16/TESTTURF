@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Shield, Flame, Trophy, Clock, CheckCircle2, XCircle, ArrowRight, Loader2, Swords, AlertCircle, Sparkles } from 'lucide-react';
+import { Shield, Flame, Trophy, Clock, CheckCircle2, XCircle, ArrowRight, Loader2, Swords, AlertCircle, Sparkles, RefreshCw } from 'lucide-react';
 import { WS_BASE_URL } from '../config.js';
 
 export default function QuizArena({ onReturnToHub, token, currentUser }) {
   const wsRef = useRef(null);
+  const [reconnectAttempt, setReconnectAttempt] = useState(0);
   
   // Matchmaking & Game States
   const [matchStatus, setMatchStatus] = useState('CONNECTING'); // 'CONNECTING' | 'WAITING' | 'PLAYING' | 'REVIEW' | 'GAME_OVER' | 'ERROR'
@@ -27,6 +28,12 @@ export default function QuizArena({ onReturnToHub, token, currentUser }) {
 
   const myId = currentUser?.id;
 
+  const handleRetry = () => {
+    setErrorMsg('');
+    setMatchStatus('CONNECTING');
+    setReconnectAttempt((prev) => prev + 1);
+  };
+
   // Initialize WebSocket Connection & Matchmaking
   useEffect(() => {
     const authToken = token || localStorage.getItem('token');
@@ -43,6 +50,7 @@ export default function QuizArena({ onReturnToHub, token, currentUser }) {
     socket.onopen = () => {
       console.log('⚡ Connected to 1v1 Battle WebSocket Server');
       setMatchStatus('WAITING');
+      setErrorMsg('');
       // Request matchmaking
       socket.send(JSON.stringify({ type: 'init_game' }));
     };
@@ -127,6 +135,7 @@ export default function QuizArena({ onReturnToHub, token, currentUser }) {
 
           case 'error':
             setErrorMsg(payload?.message || 'WebSocket Error occurred');
+            setMatchStatus('ERROR');
             break;
         }
       } catch (err) {
@@ -136,20 +145,22 @@ export default function QuizArena({ onReturnToHub, token, currentUser }) {
 
     socket.onerror = (err) => {
       console.error('WebSocket Error:', err);
-      setErrorMsg('Failed to connect to battle server at ws://localhost:8080');
+      setErrorMsg('Failed to connect to battle server at ws://localhost:8080. Please ensure the WebSocket backend is running.');
+      setMatchStatus('ERROR');
     };
 
     socket.onclose = (e) => {
       console.log('WebSocket connection closed', e);
       if (e.code === 4001) {
         setErrorMsg('Authentication expired or unauthorized. Please re-login.');
+        setMatchStatus('ERROR');
       }
     };
 
     return () => {
       socket.close();
     };
-  }, [token]);
+  }, [token, reconnectAttempt]);
 
   // Round Timer Countdown Effect
   useEffect(() => {
@@ -192,16 +203,28 @@ export default function QuizArena({ onReturnToHub, token, currentUser }) {
   if (matchStatus === 'ERROR' || errorMsg) {
     return (
       <div className="min-h-screen w-full bg-slate-50 dark:bg-black text-slate-900 dark:text-emerald-400 flex flex-col items-center justify-center p-6 font-mono">
-        <div className="p-8 max-w-md w-full bg-white dark:bg-zinc-950 border border-red-500/40 rounded-2xl shadow-xl text-center space-y-4">
-          <AlertCircle className="w-12 h-12 text-red-500 mx-auto" />
-          <h2 className="text-xl font-bold font-sans text-red-500 uppercase">CONNECTION ERROR</h2>
-          <p className="text-xs text-slate-600 dark:text-slate-400">{errorMsg}</p>
-          <button
-            onClick={onReturnToHub}
-            className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase cursor-pointer"
-          >
-            RETURN TO HUB
-          </button>
+        <div className="p-8 max-w-md w-full bg-white dark:bg-zinc-950 border border-red-500/40 rounded-2xl shadow-xl text-center space-y-5">
+          <AlertCircle className="w-14 h-14 text-red-500 mx-auto" />
+          <div className="space-y-1">
+            <h2 className="text-xl font-bold font-sans text-red-500 uppercase">CONNECTION ERROR</h2>
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{errorMsg}</p>
+          </div>
+
+          <div className="pt-2 flex flex-col gap-2.5">
+            <button
+              onClick={handleRetry}
+              className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase flex items-center justify-center gap-2 cursor-pointer transition-colors"
+            >
+              <RefreshCw className="w-4 h-4" />
+              <span>RETRY CONNECTION</span>
+            </button>
+            <button
+              onClick={onReturnToHub}
+              className="w-full py-3 rounded-xl border border-slate-300 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-zinc-900 font-bold text-xs uppercase cursor-pointer transition-colors"
+            >
+              RETURN TO HUB
+            </button>
+          </div>
         </div>
       </div>
     );
